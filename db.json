@@ -1,0 +1,13 @@
+{ 
+"projects": [ 
+{ "id": "1", "name": "Site E-commerce", "color": "#e74c3c" }, 
+{ "id": "2", "name": "App Mobile", "color": "#3498db" }, 
+{ "id": "3", "name": "API Backend", "color": "#2ecc71" } ,
+{ "id": "4", "name": "Dashboard Admin", "color": "#9b59b6" }
+], 
+"columns": [ 
+{ "id": "todo", "title": "À Faire", "tasks": ["Maquettes UI", "Specs techniques"] }, 
+{ "id": "progress", "title": "En Cours", "tasks": ["API Auth", "Page Login"] }, 
+{ "id": "done", "title": "Terminé", "tasks": ["Setup projet", "Config ESLint"] } 
+] 
+} 

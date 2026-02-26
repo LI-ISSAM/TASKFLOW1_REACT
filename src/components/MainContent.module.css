@@ -1,0 +1,71 @@
+.main {
+    margin-left: 250px; /* espace pour sidebar */
+    padding: 20px;
+
+    background-color: #f1f5f9;
+
+    min-height: 100vh;
+
+    transition: margin-left 0.3s ease;
+}
+
+/* board */
+.board {
+    display: flex;
+    gap: 20px;
+
+    align-items: flex-start;
+
+    overflow-x: auto;
+}
+
+/* colonne */
+.column {
+    background-color: #e2e8f0;
+
+    border-radius: 10px;
+
+    padding: 15px;
+
+    min-width: 250px;
+
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* titre colonne */
+.colTitle {
+    margin-bottom: 15px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    color: #0f172a;
+}
+
+/* carte */
+.card {
+    background-color: white;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    margin-bottom: 10px;
+
+    cursor: pointer;
+
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
