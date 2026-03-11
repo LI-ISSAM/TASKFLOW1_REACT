@@ -149,4 +149,3 @@ React recommande `useEffect` par défaut. N'utiliser `useLayoutEffect` que si `u
 
 ---
 
-*TaskFlow Séance 2 — EMSI Front-End*
