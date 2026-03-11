@@ -9,5 +9,10 @@
 { "id": "todo", "title": "À Faire", "tasks": ["Maquettes UI", "Specs techniques"] }, 
 { "id": "progress", "title": "En Cours", "tasks": ["API Auth", "Page Login"] }, 
 { "id": "done", "title": "Terminé", "tasks": ["Setup projet", "Config ESLint"] } 
-] 
+] ,
+ "users": [ 
+    { "id": "1", "email": "admin@taskflow.com", "password": "admin123", "name": "Admin" }, 
+    { "id": "2", "email": "ali@taskflow.com", "password": "ali123", "name": "Ali" }, 
+    { "id": "3", "email": "sara@taskflow.com", "password": "sara123", "name": "Sara" } 
+  ]
 } 
