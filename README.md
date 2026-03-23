@@ -2,13 +2,6 @@
 ## Partie 1 — Initialisation
 
 **Q : Que contient le `<body>` dans index.html ? Lien avec le CSR ?**
-```html
-
-  
-  
-
-```
-
 Le `<body>` contient uniquement un `<div id="root">` vide et le script React.
 C'est le principe du **CSR (Client Side Rendering)** — le navigateur reçoit une page HTML vide, puis JavaScript génère tout le contenu côté client dans ce `div#root`.
 Contrairement au SSR (Server Side Rendering), le serveur n'envoie pas de HTML prêt — c'est React qui construit l'interface dans le navigateur.
