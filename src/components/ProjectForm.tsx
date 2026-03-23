@@ -20,7 +20,7 @@ export default function ProjectForm({
   const [color, setColor] = useState(initialColor);
 
   function handleSubmit(e: React.FormEvent) {
-    e.preventDefault(); // BUG CORRIGÉ : e.preventDefault() manquait → rechargement de page
+    e.preventDefault(); 
     onSubmit(name, color);
   }
 
