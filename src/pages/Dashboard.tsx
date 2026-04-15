@@ -2,16 +2,17 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../features/auth/AuthContext';
 import api from '../api/axios';
-import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import MainContent from '../components/MainContent';
 import ProjectForm from '../components/ProjectForm';
 import styles from './Dashboard.module.css';
+import HeaderMUI from '../components/HeaderMUI';
 
 interface Project { id: string; name: string; color: string; }
 interface Column { id: string; title: string; tasks: string[]; }
 
 export default function Dashboard() {
+  
   const { state: authState, dispatch } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -101,7 +102,7 @@ export default function Dashboard() {
 
   return (
     <div className={styles.layout}>
-      <Header
+      <HeaderMUI
         title="TaskFlow"
         onMenuClick={() => setSidebarOpen(p => !p)}
         userName={authState.user?.name}
