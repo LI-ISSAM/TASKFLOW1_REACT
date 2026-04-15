@@ -1,59 +1,48 @@
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background-color: #0f172a;
-    color: white;
-
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    padding: 20px;
-
-    transition: transform 0.3s ease;
-
-    overflow-y: auto;
+  width: 240px;
+  background: #f8f9fa;
+  border-right: 1px solid #e0e0e0;
+  padding: 1.5rem 1rem;
+  overflow-y: auto;
+  flex-shrink: 0;
 }
 
-.open {
-    transform: translateX(0);
+.sectionTitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #888;
+  letter-spacing: 0.08em;
+  margin: 0 0 1rem 0;
 }
 
-.closed {
-    transform: translateX(-100%);
-}
-
-.sidebar h2 {
-    font-size: 18px;
-    margin-bottom: 20px;
-    font-weight: 600;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.projectList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .projectItem {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    padding: 10px;
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
 }
 
 .projectItem:hover {
-    background-color: rgba(255,255,255,0.1);
+  background: #ececec;
 }
 
-.projectColor {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+.colorDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }

@@ -1,0 +1,16 @@
+.container { display:flex; justify-content:center; align-items:center; 
+  height:100vh; background:#f0f0f0; } 
+.form { background:white; padding:2.5rem; border-radius:12px; 
+  box-shadow:0 4px 20px rgba(0,0,0,0.1); width:100%; max-width:400px; 
+  display:flex; flex-direction:column; gap:1rem; } 
+.title { color:#1B8C3E; font-size:1.8rem; text-align:center; } 
+.subtitle { color:#888; text-align:center; font-size:0.9rem; } 
+.input { padding:0.75rem 1rem; border:1px solid #ddd; border-radius:8px; 
+  font-size:1rem; outline:none; transition:border 0.2s; } 
+.input:focus { border-color:#1B8C3E; } 
+.button { padding:0.75rem; background:#1B8C3E; color:white; border:none; 
+  border-radius:8px; font-size:1rem; font-weight:600; cursor:pointer; } 
+.button:hover { background:#157a33; } 
+.button:disabled { background:#ccc; cursor:not-allowed; } 
+.error { background:#ffeef0; color:#d32f2f; padding:0.75rem; 
+  border-radius:8px; text-align:center; font-size:0.9rem; } 
