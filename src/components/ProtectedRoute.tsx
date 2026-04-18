@@ -1,13 +1,14 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../features/auth/AuthContext';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
 
 interface Props { children: React.ReactNode; }
 
 export default function ProtectedRoute({ children }: Props) {
-  const { state } = useAuth();
+  const { user } = useSelector((state: RootState) => state.auth);
   const location = useLocation();
 
-  if (!state.user) {
+  if (!user) {
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
