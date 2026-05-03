@@ -1,77 +1,48 @@
 'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-
+import { useActionState } from 'react';
+import {login} from '../actions/auth';
 export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    try {
-      const res = await fetch(`http://localhost:4000/users?email=${email}`);
-      const users = await res.json();
-
-      if (users.length === 0 || users[0].password !== password) {
-        setError('Email ou mot de passe incorrect');
-        return;
-      }
-
-      router.push('/dashboard');
-    } catch {
-      setError('Erreur serveur');
-    } finally {
-      setLoading(false);
-    }
-  }
+  const [state, formAction, pending] = useActionState(login, null);
 
   return (
-    <div style={{ padding: '2rem', maxWidth: 400, margin: '0 auto' }}>
-      <h1 style={{ color: '#1B8C3E' }}>TaskFlow</h1>
-      <p>Connectez-vous pour continuer</p>
+    <div style={{ padding: '2rem', maxWidth: 400, margin: '4rem auto' }}>
+      <h1 style={{ color: '#1B8C3E', marginBottom: '0.5rem' }}>TaskFlow</h1>
+      <p style={{ color: '#888', marginBottom: '1.5rem' }}>Connectez-vous pour continuer</p>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {state?.error && (
+        <p style={{
+          color: '#d32f2f', background: '#ffeef0',
+          padding: '0.75rem', borderRadius: 8, marginBottom: '1rem',
+        }}>
+          {state.error}
+        </p>
+      )}
 
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: 'flex', flexDirection: 'column', gap: 12 }}
-      >
+      <form action={formAction} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <input
+          name="email"
           type="email"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           required
-          style={{ padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
+          style={{ padding: 10, borderRadius: 6, border: '1px solid #ddd', fontSize: '1rem' }}
         />
         <input
+          name="password"
           type="password"
           placeholder="Mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           required
-          style={{ padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
+          style={{ padding: 10, borderRadius: 6, border: '1px solid #ddd', fontSize: '1rem' }}
         />
         <button
           type="submit"
-          disabled={loading}
+          disabled={pending}
           style={{
-            padding: 10,
-            background: '#1B8C3E',
-            color: 'white',
-            border: 'none',
-            borderRadius: 4,
-            cursor: 'pointer',
+            padding: 12, background: pending ? '#ccc' : '#1B8C3E',
+            color: 'white', border: 'none', borderRadius: 6,
+            fontSize: '1rem', fontWeight: 600, cursor: pending ? 'not-allowed' : 'pointer',
           }}
         >
-          {loading ? 'Connexion...' : 'Se connecter'}
+          {pending ? 'Connexion...' : 'Se connecter'}
         </button>
       </form>
     </div>
