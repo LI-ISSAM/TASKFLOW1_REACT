@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint"
   },
@@ -16,6 +16,9 @@
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
+  
+ 
+
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
