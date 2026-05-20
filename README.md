@@ -1,42 +1,86 @@
-# todo-vue
+Q1 — Fichier .vue (3 sections) vs .tsx (tout mélangé)
+Le fichier .vue sépare <script>, <template> et <style> : chaque section a un rôle clair. Un designer peut modifier le template sans toucher à la logique. C'est plus lisible pour des composants simples.
+Inconvénient : plus de "magie" du compilateur, support TypeScript parfois moins précis qu'en .tsx pur.
+Le fichier .tsx de React garde tout en JavaScript : plus cohérent conceptuellement, meilleur support TypeScript natif, mais mélange logique et affichage dans le même flux.
 
-This template should help get you started developing with Vue 3 in Vite.
+Q2 — Pourquoi React n'a pas de two-way binding natif ?
+React suit le principe de flux de données unidirectionnel (one-way data flow) : les données descendent des parents vers les enfants, jamais dans l'autre sens automatiquement. C'est un choix philosophique : quand value et onChange sont explicites, on sait exactement qui modifie quoi — plus prévisible et plus facile à déboguer.
+Vue considère que v-model est un sucre syntaxique acceptable car il compile en value + @input en interne — c'est la même chose, juste écrite en moins de code.
 
-## Recommended IDE Setup
+Q3 — Pourquoi tasks.value.push(data) fonctionne en Vue mais pas en React ?
+Vue 3 utilise les Proxy JavaScript pour envelopper les objets réactifs. Quand on fait ref([]), Vue crée un Proxy autour du tableau. Ce Proxy intercepte toutes les opérations — push, splice, pop — et déclenche automatiquement la mise à jour du DOM.
+React n'a pas ce mécanisme : il compare l'ancienne référence à la nouvelle pour détecter les changements. Si on fait tasks.push(data), la référence du tableau reste identique, React ne voit aucune différence et ne re-rend pas. Il faut créer un nouveau tableau avec [...prev, data] pour changer la référence.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Q4 — useEffect(fn, []) vs onMounted(fn) — lequel est plus lisible ?
+onMounted est plus lisible : le nom dit exactement ce qu'il fait.
+useEffect avec [] est un compromis : React a voulu un seul hook pour gérer tous les effets de bord (montage, mise à jour, démontage). Le tableau de dépendances permet de dire "re-exécute cet effet quand ces valeurs changent", ce qui unifie plusieurs cas en un seul hook. C'est puissant mais déroutant pour les débutants.
+Vue sépare onMounted, onUpdated, onUnmounted — plus verbeux mais immédiatement compréhensible.
 
-## Recommended Browser Setup
+Q5 — Props fonctions (React) vs événements émis (Vue) — lequel est plus proche du HTML natif ?
+L'approche Vue avec emit est plus proche du HTML natif. En HTML, les éléments émettent des événements (click, change, input) et les parents les écoutent. Vue reproduit exactement ce modèle : l'enfant émet, le parent écoute avec @.
+React passe des fonctions comme n'importe quelle autre prop, ce qui est cohérent avec "tout est JavaScript" mais s'éloigne du modèle d'événements du DOM.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+Q6 — Que se passe-t-il si on oublie @delete en Vue ?
+L'événement est silencieusement ignoré. L'enfant appelle emit('delete', id), Vue cherche un listener dans le parent, n'en trouve pas, et ne fait rien — pas d'erreur, pas de crash.
+En React, si on oublie de passer onDelete et que l'enfant appelle props.onDelete(id), on obtient TypeError: props.onDelete is not a function et l'app crash. Vue est plus permissif, React est plus strict — ce qui peut être préférable pour détecter les bugs tôt.
 
-## Type Support for `.vue` Imports in TS
+Q7 — useParams + useNavigate (React) vs useRoute + useRouter (Vue) — vraiment différent ?
+Non, la logique est identiquement la même. Les deux frameworks séparent la lecture des paramètres (useParams / useRoute) de la navigation programmatique (useNavigate / useRouter). Seuls les noms changent. route.params.id vs params.id — c'est la même API. Quelqu'un qui connaît l'un apprend l'autre en quelques minutes.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+Q8 — Routes dans le JSX (React) vs fichier de config (Vue) — avantage de Vue ?
+La séparation Vue offre plusieurs avantages : la configuration des routes est centralisée dans un seul fichier, facile à lire d'un coup d'œil ; on peut ajouter des guards de navigation (beforeEach) proprement ; la configuration peut être générée dynamiquement ; les routes ne sont pas mélangées avec la logique des composants. React Router v6+ le permet aussi, mais ce n'est pas la convention par défaut.
 
-## Customize configuration
+Q9 — Redux Toolkit vs Pinia — combien de concepts ?
+Redux Toolkit : createSlice + configureStore + Provider + useSelector + useDispatch + comprendre les reducers + comprendre les actions = 7 concepts minimum.
+Pinia : defineStore + useTaskStore() = 2 concepts. Le store expose directement state, getters et actions sans distinction artificielle. Pinia gagne largement en courbe d'apprentissage.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Q10 — dispatch(addTask(title)) vs store.addTask(title) — lequel est plus intuitif ?
+store.addTask(title) est clairement plus intuitif — c'est un appel de méthode normal, comme n'importe quel objet JavaScript. dispatch(addTask(title)) nécessite de comprendre le pattern Command/Action et pourquoi on ne peut pas appeler directement la fonction.
+Avantage de Redux que Pinia n'a pas : les DevTools avec time-travel debugging — chaque action est un objet sérialisable, on peut rejouer, annuler et inspecter chaque changement d'état dans le temps. Pour les apps complexes avec beaucoup d'états interdépendants, cet avantage est réel.
 
-## Project Setup
+Q11 — Concepts identiques vs fondamentalement différents
+Identiques (juste le nom change) :
 
-```sh
-npm install
-```
+Routing : useParams ↔ useRoute, useNavigate ↔ useRouter
+Props parent→enfant
+Fetch au montage : useEffect[] ↔ onMounted
+Lien de navigation : <Link> ↔ <RouterLink>
+Gestion d'erreurs async
 
-### Compile and Hot-Reload for Development
+Fondamentalement différents :
 
-```sh
-npm run dev
-```
+Réactivité : immutabilité + setState ↔ Proxy + mutation directe
+Two-way binding : inexistant natif ↔ v-model
+Communication enfant→parent : prop fonction ↔ emit d'événement
+State management : Redux multi-fichiers/concepts ↔ Pinia minimaliste
+Structure des fichiers : tout en JS ↔ Single File Component 3 sections
 
-### Type-Check, Compile and Minify for Production
 
-```sh
-npm run build
-```
+Q12 — Vue est-il plus « magique » ? Avantage ou inconvénient ?
+Oui, Vue est plus magique : v-model, mutations directes via Proxy, <style scoped> — tout ça est de la magie du compilateur.
+Avantage : productivité et lisibilité, surtout pour des apps de taille moyenne.
+Inconvénient : quand quelque chose ne marche pas, comprendre pourquoi ref nécessite .value dans le script mais pas dans le template, ou déboguer un Proxy peut être difficile. React avec son immutabilité explicite est plus verbeux mais plus transparent — on voit exactement ce qui se passe.
+
+Q13 — App e-commerce, 50+ pages, équipe de 10, dashboard admin : React ou Vue ?
+React.
+
+L'écosystème React est plus large (plus de librairies, plus de devs disponibles sur le marché)
+TypeScript est plus naturellement intégré dans les fichiers .tsx
+Les grandes entreprises ont prouvé sa scalabilité à grande échelle
+Next.js offre SSR/SSG robuste pour l'e-commerce (SEO, performance)
+L'immutabilité forcée réduit les bugs subtils quand 10 développeurs modifient le même état
+
+Vue reste excellent mais son écosystème enterprise est moins mature que React/Next.js.
+
+Q14 — React ou Vue en premier pour un débutant ?
+Vue en premier.
+
+v-model évite d'expliquer le flux unidirectionnel dès le départ
+Les templates HTML ressemblent à du HTML avec des attributs spéciaux — plus intuitif qu'apprendre JSX
+Pinia est infiniment plus simple que Redux
+La séparation script/template/style aide à comprendre la structure d'un composant
+
+Une fois Vue maîtrisé, passer à React est naturel car les concepts fondamentaux (composants, props, state, routing) sont les mêmes — seule la syntaxe et la philosophie de réactivité changent.
+
+Tableau de comparaison finale
+ConceptReactVue 3State localconst [x, setX] = useState(0)const x = ref(0)Two-way bindingvalue={x} onChange={e => set(e.target.value)}v-model="x"Fetch au montageuseEffect(() => { fetch()... }, [])onMounted(async () => { fetch()... })Ajouter au statesetItems(prev => [...prev, data])items.value.push(data)Boucle templateitems.map(i => <li key={i.id}>)<li v-for="i in items" :key="i.id">Conditionnel{condition && <div>}<div v-if="condition">EventonClick={handler}@click="handler"Props enfant<Child name={x} /><Child :name="x" />Callback parent<Child onDelete={handler} /><Child @delete="handler" />Router lien<Link to='/x'><RouterLink to='/x'>Params URLconst { id } = useParams()useRoute().params.idNavigateconst nav = useNavigate(); nav('/')const router = useRouter(); router.push('/')State globalcreateSlice + useSelector + dispatchdefineStore + useTaskStore()Appeler actiondispatch(addTask(title))store.addTask(title)Style isoléCSS Modules / .module.css<style scoped>
