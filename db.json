@@ -1,0 +1,112 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@taskflow.com",
+      "password": "admin123",
+      "name": "Admin"
+    },
+    {
+      "id": "2",
+      "email": "ali@taskflow.com",
+      "password": "ali123",
+      "name": "Ali"
+    },
+    {
+      "id": "3",
+      "email": "sara@taskflow.com",
+      "password": "sara123",
+      "name": "Sara"
+    }
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "name": "Site E-commerce",
+      "color": "#e74c3c"
+    },
+    {
+      "id": "2",
+      "name": "App Mobile",
+      "color": "#3498db"
+    },
+    {
+      "id": "3",
+      "name": "API Backend",
+      "color": "#2ecc71"
+    },
+    {
+      "id": "3cd0",
+      "name": "xxx",
+      "color": "#3498db"
+    },
+    {
+      "id": "7789",
+      "name": "opopop",
+      "color": "#000000"
+    },
+    {
+      "id": "dd83",
+      "name": "mpmp",
+      "color": "#ff8800"
+    },
+    {
+      "id": "b49e",
+      "name": "xsxs",
+      "color": "#c8a809"
+    }
+  ],
+  "columns": [
+    {
+      "id": "todo",
+      "title": "À Faire",
+      "tasks": [
+        "Maquettes UI",
+        "Specs techniques"
+      ]
+    },
+    {
+      "id": "progress",
+      "title": "En Cours",
+      "tasks": [
+        "API Auth",
+        "Page Login"
+      ]
+    },
+    {
+      "id": "done",
+      "title": "Terminé",
+      "tasks": [
+        "Setup projet",
+        "Config ESLint"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "2",
+      "title": "Faire le TP",
+      "done": false
+    },
+    {
+      "id": "07d7",
+      "title": "deded",
+      "done": false
+    },
+    {
+      "id": "f111",
+      "title": "dwdwed",
+      "done": false
+    },
+    {
+      "id": "8fc9",
+      "title": "dwdewdew",
+      "done": false
+    },
+    {
+      "id": "93a8",
+      "title": "dewdew",
+      "done": false
+    }
+  ]
+}
